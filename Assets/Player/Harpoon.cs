@@ -7,6 +7,8 @@ public class Harpoon : MonoBehaviour
     [SerializeField] float zipSpeed;
     [SerializeField] LayerMask platformLayerMask;
 
+    [SerializeField] GameObject hookPf;
+
     private Vector3 targetLocation;
     private Rigidbody2D rigidbody2d;
 
@@ -38,6 +40,7 @@ public class Harpoon : MonoBehaviour
 
     public void AimHarpoon(Vector3 targetLocation)
     {
+        Instantiate(hookPf, transform.position, Quaternion.Euler(0,0,Utils.DegreesFromTwoPoints(transform.position, targetLocation)));
         Debug.Log("Aim Harpoon");
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, (Utils.GetMouseWorldPosition() - transform.position), 1000f, platformLayerMask);
         Debug.DrawRay(transform.position, (Utils.GetMouseWorldPosition() - transform.position), Color.yellow, 1);
