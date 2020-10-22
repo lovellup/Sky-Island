@@ -288,6 +288,7 @@ MonoBehaviour:
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  hookPf: {fileID: 3575634671506285985, guid: ac0027f025e517b40ba5986fc9797d23, type: 3}
 --- !u!114 &147825594
 MonoBehaviour:
   m_ObjectHideFlags: 0

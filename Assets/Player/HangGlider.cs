@@ -14,7 +14,6 @@ public class HangGlider : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         originalGravityScale = rigidbody2d.gravityScale;
-        Debug.Log(originalGravityScale);
     }
 
     private void Update() {

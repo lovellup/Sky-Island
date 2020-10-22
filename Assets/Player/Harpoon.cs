@@ -7,7 +7,7 @@ public class Harpoon : MonoBehaviour
     [SerializeField] float zipSpeed;
     [SerializeField] LayerMask platformLayerMask;
 
-    [SerializeField] GameObject hookPf;
+    [SerializeField] Transform hookPf;
 
     private Vector3 targetLocation;
     private Rigidbody2D rigidbody2d;
@@ -27,12 +27,9 @@ public class Harpoon : MonoBehaviour
     {
         if (targetLocation != null && targetLocation != Vector3.zero)
         {
-            Debug.DrawLine(targetLocation, transform.position, Color.green, 1f);
             rigidbody2d.velocity += (Vector2)(targetLocation - transform.position).normalized * zipSpeed * Time.deltaTime;
-            Debug.Log(Vector2.Distance(targetLocation, transform.position));
-            if (Vector2.Distance(targetLocation, transform.position) < 1f)
+            if (Vector2.Distance(targetLocation, transform.position) < 1f) 
             {
-                Debug.DrawLine(targetLocation, transform.position, Color.red, 1f);
                 SetTargetPosition(Vector3.zero);
             }
         }
@@ -40,26 +37,25 @@ public class Harpoon : MonoBehaviour
 
     public void AimHarpoon(Vector3 targetLocation)
     {
-        Instantiate(hookPf, transform.position, Quaternion.Euler(0,0,Utils.DegreesFromTwoPoints(transform.position, targetLocation)));
-        Debug.Log("Aim Harpoon");
+        Transform hook = Instantiate(hookPf, transform.position, Quaternion.Euler(0,0,Utils.DegreesFromTwoPoints(transform.position, targetLocation)));
+        Hook castedHook = hook.GetComponent<Hook>();
+        Vector3 targetDirection = (targetLocation - transform.position).normalized;
+        Debug.Log(castedHook);
+        castedHook.setTargetDirection(targetDirection);
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, (Utils.GetMouseWorldPosition() - transform.position), 1000f, platformLayerMask);
-        Debug.DrawRay(transform.position, (Utils.GetMouseWorldPosition() - transform.position), Color.yellow, 1);
         if (raycastHit.collider != null)
         {
-            Debug.Log("RAYCAST HIT POINT" + raycastHit.point);
             SetTargetPosition(raycastHit.point);
         }
     }
 
     public void CancelHarpoon()
     {
-        Debug.Log("Cancel Harpoon");
         SetTargetPosition(Vector3.zero);
     }
 
     private void SetTargetPosition(Vector3 targetPosition)
     {
-        Debug.Log("Setting Target Position: " + targetPosition);
         this.targetLocation = targetPosition;
     }
 }
