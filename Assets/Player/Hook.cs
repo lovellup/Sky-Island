@@ -10,11 +10,14 @@ public class Hook : MonoBehaviour
     {
         Debug.Log("Set Target Direction: " + targetDirection);
         GetComponent<Rigidbody2D>().AddForce(new Vector2(targetDirection.x, targetDirection.y) * speedMultiplier, ForceMode2D.Impulse);
+        Destroy(gameObject, 5f);
+
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.GetComponent<Player>() == null) {
             GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            Destroy(gameObject, 2f);
         }
     }
 }
